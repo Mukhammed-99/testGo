@@ -1,6 +1,7 @@
 package main
 
 import (
+<<<<<<< Updated upstream
 	"fmt"
 	"test/receive"
 	"time"
@@ -38,4 +39,30 @@ func handler(d amqp.Delivery) bool {
 	}
 	fmt.Println(string(d.Body))
 	return true
+=======
+	"context"
+	"log"
+	"test-go/ent"
+	"test-go/ent/migrate"
+
+	_ "github.com/jinzhu/gorm/dialects/mysql"
+)
+
+func main() {
+	client, err := ent.Open("mysql", "root:@tcp(localhost:3306)/test")
+	if err != nil {
+		log.Fatalf("failed connecting to mysql: %v", err)
+	}
+	defer client.Close()
+	ctx := context.Background()
+	// Run migration.
+	err = client.Schema.Create(
+		ctx,
+		migrate.WithDropIndex(true),
+		migrate.WithDropColumn(true),
+	)
+	if err != nil {
+		log.Fatalf("failed creating schema resources: %v", err)
+	}
+>>>>>>> Stashed changes
 }
